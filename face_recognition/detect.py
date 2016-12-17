@@ -105,6 +105,10 @@ class FaceDetector(object):
                 mouth,
                 nose,
             )
+
+            if img_copy.shape[0] < 0 or img_copy.shape[1] < 10:
+                continue
+
             img_copy = img_copy.astype(np.uint8)
             output.append(img_copy)
 
