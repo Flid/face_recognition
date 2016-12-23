@@ -1,6 +1,5 @@
 from __future__ import unicode_literals, absolute_import
 
-import sys
 from PIL import Image
 from face_recognition.capture import Camera
 from face_recognition.detect import FaceDetector
@@ -29,5 +28,6 @@ while True:
     N += 1
     img = Image.fromarray(faces[0])
 
-    with open('/tmp/out/%s.jpg' % N, 'w') as fd:
-        img.save(fd)
+
+    #with open('/tmp/out/%s.jpg' % N, 'w') as fd:
+    #    img.save(fd)

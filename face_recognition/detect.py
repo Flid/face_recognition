@@ -33,30 +33,33 @@ class FaceDetector(object):
 
     @staticmethod
     def transform_image(image, l_eye, r_eye, mouth, nose):
-        height = image.shape[0]
-        width = image.shape[1]
+        orig_height = image.shape[0]
+        orig_width = image.shape[1]
 
-        angle1 = math.acos((mouth[1] - nose[1]) / math.sqrt((nose[0]-mouth[0])**2 + (nose[1]-mouth[1])**2))
-        angle1 = math.degrees(angle1)
+        angle1 = math.acos(
+            (mouth[1] - nose[1]) / math.sqrt((nose[0]-mouth[0])**2 + (nose[1]-mouth[1])**2),
+        )
 
         if nose[0] < mouth[0]:
             angle1 *= -1
 
-
-        angle2 = math.acos((r_eye[1] - l_eye[1]) / math.sqrt((r_eye[0]-l_eye[0])**2 + (r_eye[1]-l_eye[1])**2))
-        angle2 = 90 - math.degrees(angle2)
+        angle2 = math.acos(
+            (r_eye[1] - l_eye[1]) / math.sqrt((r_eye[0]-l_eye[0])**2 + (r_eye[1]-l_eye[1])**2),
+        )
+        angle2 = math.pi / 2 - angle2
 
         angle = (angle1 + angle2) / 2.
 
-        image = scipy.ndimage.interpolation.rotate(image, angle)
+        image = scipy.ndimage.interpolation.rotate(image, math.degrees(angle))
 
-        r_angle = -math.radians(angle)
+        angle *= -1
 
         eye_x = (l_eye[0] + r_eye[0]) / 2
         eye_y = (l_eye[1] + r_eye[1]) / 2
-        mid_x = (eye_x-width/2) * math.cos(r_angle) - (eye_y-height/2)*math.sin(r_angle) + image.shape[1] / 2
-        mid_y = (eye_x-width/2) * math.sin(r_angle) + (eye_y-height/2)*math.cos(r_angle) + image.shape[0] / 2
 
+        # Convert (eye_x, eye_y) to new rotated coordinates
+        mid_x = (eye_x-orig_width/2) * math.cos(angle) - (eye_y-orig_height/2) * math.sin(angle) + image.shape[1] / 2
+        mid_y = (eye_x-orig_width/2) * math.sin(angle) + (eye_y-orig_height/2) * math.cos(angle) + image.shape[0] / 2
 
         face_size = math.sqrt(
             ((r_eye[0] + l_eye[0])/2 - mouth[0])**2
