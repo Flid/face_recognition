@@ -7,19 +7,23 @@ from face_recognition.capture import Camera
 from face_recognition.detect import FaceDetector
 from face_recognition.visualizer import Visualizer
 from face_recognition.recognizer import Recognizer
+import pickle
+
 
 log = logging.getLogger(__name__)
 
 predictor = FaceDetector(
-    b'/home/anton/tmp/shape_predictor_68_face_landmarks.dat',
+    b'shape_predictor_68_face_landmarks.dat',
 )
+cached_recognizer_path = 'recognizer.dump'
+
 camera = Camera()
 vis = Visualizer()
 
 
 def load_images():
     PATH = '/home/anton/hobby/data_sets/photos/'
-    NAMES = ['anton', 'sveta']
+    NAMES = ['anton', 'sveta', 'ian']
 
     output = {}
 
@@ -36,9 +40,20 @@ def load_images():
     return output
 
 
-recognizer = Recognizer()
-recognizer.fit(load_images())
+try:
+    with open(cached_recognizer_path, 'r') as fd:
+        print('Loading cached Serializer...')
+        recognizer = pickle.load(fd)
+except IOError:
+    print('Educating Recognizer...')
+    recognizer = Recognizer()
+    recognizer.fit(load_images())
 
+    with open(cached_recognizer_path, 'w') as fd:
+        print('Caching Serializer...')
+        pickle.dump(recognizer, fd)
+
+print('Starting main loop...')
 
 while True:
     img = camera.get_frame()

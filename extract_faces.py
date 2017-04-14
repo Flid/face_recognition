@@ -6,9 +6,7 @@ from face_recognition.detect import FaceDetector
 from face_recognition.visualizer import Visualizer
 
 
-predictor = FaceDetector(
-    b'/home/anton/tmp/shape_predictor_68_face_landmarks.dat',
-)
+predictor = FaceDetector(b'shape_predictor_68_face_landmarks.dat')
 camera = Camera()
 vis = Visualizer()
 
@@ -28,6 +26,5 @@ while True:
     N += 1
     img = Image.fromarray(faces[0])
 
-
-    #with open('/tmp/out/%s.jpg' % N, 'w') as fd:
-    #    img.save(fd)
+    with open('/tmp/out/%s.jpg' % N, 'w') as fd:
+       img.save(fd)

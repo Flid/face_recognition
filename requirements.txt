@@ -1,0 +1,3 @@
+dlib==19.4
+picamera
+sklearn==0.18
