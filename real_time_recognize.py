@@ -9,9 +9,7 @@ from face_recognition.utils import get_recognizer_cached
 
 log = logging.getLogger(__name__)
 
-predictor = FaceDetector(
-    b'shape_predictor_68_face_landmarks.dat',
-)
+predictor = FaceDetector()
 
 camera = Camera()
 vis = Visualizer()

@@ -1,19 +1,25 @@
 from __future__ import unicode_literals, absolute_import
 
-import  logging
+import logging
 import numpy as np
 import cv2
 import dlib
 from skimage import draw
 import scipy.ndimage
 import math
+import os
 
 
 log = logging.getLogger(__name__)
 
 
 class FaceDetector(object):
-    def __init__(self, shape_predictor_path, debug=False):
+    def __init__(self, debug=False):
+        shape_predictor_path = os.path.join(
+            os.path.dirname(__import__('face_recognition').__file__),
+            'shape_predictor_68_face_landmarks.dat',
+        )
+
         self._detector = dlib.get_frontal_face_detector()
         self._predictor = dlib.shape_predictor(shape_predictor_path)
         self._debug = debug

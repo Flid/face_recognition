@@ -12,7 +12,7 @@ class MotionDetector(object):
         """
         if not motions:
             return None
-        
+
         total_wight = sum(m[4] for m in motions)
 
         x = sum(
@@ -28,7 +28,7 @@ class MotionDetector(object):
         return x, y
 
     def submit_frame(self, frame):
-        if len(frame.shape) == 3 and frame.shape[2]  > 1:
+        if len(frame.shape) == 3 and frame.shape[2] > 1:
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
         frame = cv2.GaussianBlur(frame, (21, 21), 0)
@@ -38,7 +38,6 @@ class MotionDetector(object):
 
         if prev_frame is None:
             return {}
-
 
         frame_delta = cv2.absdiff(prev_frame, frame)
         thresh = cv2.threshold(frame_delta, 25, 255, cv2.THRESH_BINARY)[1]
@@ -76,4 +75,3 @@ class MotionDetector(object):
             'motions': motions,
             'center': self.get_mass_point(motions),
         }
-

@@ -11,9 +11,7 @@ def run():
     app = Flask(__name__)
 
     recognizer = get_recognizer_cached()
-    predictor = FaceDetector(
-        b'shape_predictor_68_face_landmarks.dat',
-    )
+    predictor = FaceDetector()
     md = MotionDetector(1000)
 
     @app.route('/recognize', methods=['POST'])
