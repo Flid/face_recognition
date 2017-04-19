@@ -27,7 +27,7 @@ class MotionDetector(object):
     def submit_frame(self, frame):
         if len(frame.shape) == 3 and frame.shape[2]  > 1:
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        
+
         frame = cv2.GaussianBlur(frame, (21, 21), 0)
 
         prev_frame = self.prev_frame
@@ -43,11 +43,17 @@ class MotionDetector(object):
         # dilate the thresholded image to fill in holes, then find contours
         # on thresholded image
         thresh = cv2.dilate(thresh, None, iterations=2)
-        _, cnts, _ = cv2.findContours(
+        res = cv2.findContours(
             thresh.copy(),
             cv2.RETR_EXTERNAL,
             cv2.CHAIN_APPROX_SIMPLE,
         )
+
+        # Response is version-specific
+        if len(res) == 2:
+            cnts, _ = res
+        else:
+            _, cnts, _ = res
 
         motions = []
 
