@@ -5,8 +5,8 @@ from PIL import Image
 import numpy as np
 from time import time
 
-def run():
 
+def run():
     app = Flask(__name__)
 
     recognizer = get_recognizer_cached()
@@ -32,7 +32,7 @@ def run():
         result = recognizer.recognize(faces)
         return jsonify(result)
 
-    app.run()
+    app.run(host='0.0.0.0', port=10010)
 
 
 if __name__ == '__main__':

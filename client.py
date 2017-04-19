@@ -24,5 +24,6 @@ def send(img):
 
 
 if __name__ == '__main__':
-    img = Image.open(open('/home/anton/tmp/cam2.bmp', 'rb'))
+    img = Image.open(open('/home/anton/tmp/cam5.bmp', 'rb')).convert('L')
+
     print send(img)

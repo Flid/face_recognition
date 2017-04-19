@@ -1,6 +1,5 @@
 dlib==19.4
-picamera
-sklearn==0.18
+scikit_learn==0.18.1
 flask==0.12
 numpy==1.11.2
 requests
