@@ -8,4 +8,4 @@ Also increase swap size to ~512 (`CONF_SWAPSIZE` in `/etc/dphys-swapfile`)
 
 `pip install -r requirements.txt`
 
-To use `face_recognition.capture` you need `pip install picamera`
+To use `face_recognition.capture` you need `pip install picamera[array]`

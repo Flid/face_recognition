@@ -12,17 +12,20 @@ except ImportError:
 
 
 class RPiCamera(object):
-    def __init__(self):
+    def __init__(self, preview=False):
         self._cap = PiCamera()
         self._cap.resolution = (640, 480)
         self._cap.framerate = 10
-        self._cap.start_preview()
+
+        if preview:
+            self._cap.start_preview()
+
         self._raw_capture = PiRGBArray(self._cap)
-        time.sleep(0.1)  # Let it stabilyze
+        time.sleep(0.1)  # Let it stabilize
 
     def get_frame(self):
         self._raw_capture.truncate(0)
-        self._cap.capture(self._raw_capture, format='bgr')
+        self._cap.capture(self._raw_capture, format='L')
         return self._raw_capture.array
 
     def capture_continuous(self):
