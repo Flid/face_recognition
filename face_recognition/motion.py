@@ -10,6 +10,9 @@ class MotionDetector(object):
         """
         Calculate a weighted average of all points.
         """
+        if not motions:
+            return None
+        
         total_wight = sum(m[4] for m in motions)
 
         x = sum(
