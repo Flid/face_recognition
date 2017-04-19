@@ -25,7 +25,9 @@ class MotionDetector(object):
         return x, y
 
     def submit_frame(self, frame):
-        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        if len(frame.shape) == 3 and frame.shape[2]  > 1:
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        
         frame = cv2.GaussianBlur(frame, (21, 21), 0)
 
         prev_frame = self.prev_frame
