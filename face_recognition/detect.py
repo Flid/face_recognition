@@ -73,7 +73,7 @@ class FaceDetector(object):
         return image
 
     def find_faces(self, img):
-        if len(img.shape) == 3 and img.shape[2]  > 1:
+        if len(img.shape) == 3 and img.shape[2] > 1:
             img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
         # Ask the detector to find the bounding boxes of each face. The 1 in the
